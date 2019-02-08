@@ -6,16 +6,16 @@ namespace TreeGen
 {
     public class TreeGenerator
     {
-        public static readonly int MaxBaseNumber = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".Length;
+        public static readonly int MaxNodesPerLevel = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".Length;
 
         public static IEnumerable<TreeNode> GenerateTree(TreeGeneratorSettings settings = null)
         {
             var immutableSettings = new ImmutableTreeGeneratorSettings(settings ?? TreeGeneratorSettings.Default);
 
-            var baseNumber = immutableSettings.NodesPerLevel;
+            var nodesPerLevel = immutableSettings.NodesPerLevel;
             var levelMax = immutableSettings.LevelMax;
 
-            var @base = baseNumber + 1;
+            var @base = nodesPerLevel + 1;
 
             var id = 0;
             var digits = new int[levelMax];
@@ -25,7 +25,7 @@ namespace TreeGen
                 var d = 0;
                 while (true)
                 {
-                    if (digits[d] < baseNumber)
+                    if (digits[d] < nodesPerLevel)
                     {
                         digits[d]++;
                         break;
@@ -63,28 +63,24 @@ namespace TreeGen
             }
         }
 
-        public static string IdToToken(int id)
+        public static string IdToToken(int id, int nodesPerLevel)
         {
             if (id < 0)
                 throw new ArgumentException("Invalid id.");
             if (id == 0)
                 return "R";
-            return IdToToken(id, 2);
-        }
-        public static string IdToToken(int id, int nodesPerLevel)
-        {
-            var baseNumber = nodesPerLevel;
 
-            if (baseNumber > MaxBaseNumber)
-                throw new NotSupportedException($"The base number cannot be bigger than {MaxBaseNumber}.");
-            if (baseNumber < 2)
+
+            if (nodesPerLevel > MaxNodesPerLevel)
+                throw new NotSupportedException($"The base number cannot be bigger than {MaxNodesPerLevel}.");
+            if (nodesPerLevel < 2)
                 throw new NotSupportedException("The base number cannot be less than 2.");
 
-            var @base = baseNumber + 1;
+            var @base = nodesPerLevel + 1;
 
             var xxx = new List<int>();
             var offset = @base;
-            for (int divider = @base * baseNumber; id >= divider; divider *= baseNumber)
+            for (int divider = @base * nodesPerLevel; id >= divider; divider *= nodesPerLevel)
             {
                 xxx.Add(Math.Max(0, (id - offset) / divider));
                 offset *= @base;
@@ -99,25 +95,20 @@ namespace TreeGen
                 multiplier *= @base;
             }
 
-            var pathDigits = GetPathDigits(pathNumber, baseNumber);
+            var pathDigits = GetPathDigits(pathNumber, nodesPerLevel);
             var pathToken = GetPathToken(pathDigits);
             return pathToken;
         }
 
-        public static int TokenToId(string token)
+        public static int TokenToId(string pathToken, int nodesPerLevel)
         {
-            if (token[0] != 'R')
+            if (pathToken[0] != 'R')
                 throw new ArgumentException("Invalid token.");
-            if (token == "R")
+            if (pathToken == "R")
                 return 0;
-            return TokenToId(token, 2);
-        }
-        public static int TokenToId(string pathTtoken, int baseNumber)
-        {
-            var token = pathTtoken;
-            if (token[0] == 'R')
-                token = token.Substring(1);
-            var @base = baseNumber + 1;
+
+            var token = pathToken.Substring(1);
+            var @base = nodesPerLevel + 1;
 
             // #1 Parse as number
             var digits = new List<int>();
@@ -153,7 +144,7 @@ namespace TreeGen
             {
                 offsets.Add((pathNumber / divider) * multiplier);
                 divider *= @base;
-                multiplier *= baseNumber;
+                multiplier *= nodesPerLevel;
             } while (pathNumber >= divider);
 
             var id = pathNumber - offsets.Sum();
