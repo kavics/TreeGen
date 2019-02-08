@@ -69,8 +69,6 @@ namespace TreeGen
                 throw new ArgumentException("Invalid id.");
             if (id == 0)
                 return "R";
-
-
             if (nodesPerLevel > MaxNodesPerLevel)
                 throw new NotSupportedException($"The base number cannot be bigger than {MaxNodesPerLevel}.");
             if (nodesPerLevel < 2)
@@ -78,7 +76,7 @@ namespace TreeGen
 
             var @base = nodesPerLevel + 1;
 
-            var xxx = new List<int>();
+            var divisions = new List<int>();
             var offset = @base;
             for (int divider = @base * nodesPerLevel; id >= divider; divider *= nodesPerLevel)
             {
