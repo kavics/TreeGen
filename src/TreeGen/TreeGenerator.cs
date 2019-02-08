@@ -8,6 +8,61 @@ namespace TreeGen
     {
         public static readonly int MaxBaseNumber = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".Length;
 
+        public static IEnumerable<TreeNode> GenerateTree(TreeGeneratorSettings settings = null)
+        {
+            var immutableSettings = new ImmutableTreeGeneratorSettings(settings ?? TreeGeneratorSettings.Default);
+
+            var baseNumber = immutableSettings.NodesPerLevel;
+            var levelMax = immutableSettings.LevelMax;
+
+            var @base = baseNumber + 1;
+
+            var id = 0;
+            var digits = new int[levelMax];
+            var maxDigits = 1;
+            for (int i = 1; i < int.MaxValue; i++)
+            {
+                var d = 0;
+                while (true)
+                {
+                    if (digits[d] < baseNumber)
+                    {
+                        digits[d]++;
+                        break;
+                    }
+                    else
+                    {
+                        digits[d] = 0;
+                        d++;
+                        if (d >= levelMax)
+                            yield break;
+                        if (d > maxDigits)
+                            maxDigits++;
+                    }
+                }
+                var valid = true;
+                for (int j = 1; j < maxDigits; j++)
+                {
+                    if (digits[j] == 0)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid)
+                {
+                    id++;
+
+                    yield return new TreeNode(immutableSettings)
+                    {
+                        NodeId = id,
+                        PathId = i,
+                        PathDigits = digits.ToArray(),
+                    };
+                }
+            }
+        }
+
         public static string IdToToken(int id)
         {
             if (id < 0)
@@ -16,8 +71,10 @@ namespace TreeGen
                 return "R";
             return IdToToken(id, 2);
         }
-        public static string IdToToken(int id, int baseNumber)
+        public static string IdToToken(int id, int nodesPerLevel)
         {
+            var baseNumber = nodesPerLevel;
+
             if (baseNumber > MaxBaseNumber)
                 throw new NotSupportedException($"The base number cannot be bigger than {MaxBaseNumber}.");
             if (baseNumber < 2)
@@ -26,12 +83,12 @@ namespace TreeGen
             var @base = baseNumber + 1;
 
             var xxx = new List<int>();
+            var offset = @base;
             for (int divider = @base * baseNumber; id >= divider; divider *= baseNumber)
             {
-                var offset = divider - @base;
                 xxx.Add(Math.Max(0, (id - offset) / divider));
+                offset *= @base;
             }
-
 
             var pathNumber = id;
             var multiplier = @base;
@@ -42,24 +99,8 @@ namespace TreeGen
                 multiplier *= @base;
             }
 
-            var x = pathNumber;
-            var pathDigits = new List<int>();
-            do
-            {
-                pathDigits.Add(x % @base);
-                x /= @base;
-            } while (x > 0);
-
-            var tokenChars = new List<char>();
-            tokenChars.Add('R');
-            for (int i = pathDigits.Count - 1; i > 0; i--)
-                tokenChars.Add((char)('A' + pathDigits[i] - 1));
-            if (pathDigits.Count > 0)
-                if (pathDigits[0] != 0)
-                    tokenChars.Add((char)('a' + pathDigits[0] - 1));
-
-            var pathToken = new string(tokenChars.ToArray());
-
+            var pathDigits = GetPathDigits(pathNumber, baseNumber);
+            var pathToken = GetPathToken(pathDigits);
             return pathToken;
         }
 
@@ -94,7 +135,7 @@ namespace TreeGen
             }
 
             // Parse nodes (big letters)
-            var multiplier = 3;
+            var multiplier = @base;
             for (int i = token.Length - 1; i >= 0; i--)
             {
                 digits.Add(multiplier * (token[i] - 'A' + 1));
@@ -118,6 +159,32 @@ namespace TreeGen
             var id = pathNumber - offsets.Sum();
 
             return id;
+        }
+
+        public static int[] GetPathDigits(int pathId, int nodesPerLevel)
+        {
+            var id = pathId;
+            var @base = nodesPerLevel + 1;
+
+            var pathDigits = new List<int>();
+            do
+            {
+                pathDigits.Add(id % @base);
+                id /= @base;
+            } while (id > 0);
+
+            return pathDigits.ToArray();
+        }
+        public static string GetPathToken(int[] pathDigits)
+        {
+            var tokenChars = new List<char>();
+            tokenChars.Add('R');
+            for (int i = pathDigits.Length - 1; i > 0; i--)
+                tokenChars.Add((char)('A' + pathDigits[i] - 1));
+            if (pathDigits.Length > 0)
+                if (pathDigits[0] != 0)
+                    tokenChars.Add((char)('a' + pathDigits[0] - 1));
+            return new string(tokenChars.ToArray());
         }
 
         public static int Pow(int x, uint exp)
