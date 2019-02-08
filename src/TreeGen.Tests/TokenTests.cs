@@ -12,7 +12,9 @@ namespace TreeGen.Tests
         [TestMethod]
         public void Xxx()
         {
-            var settings = new TreeGeneratorSettings { NodesPerLevel = 10, LevelMax = 8 };
+            Assert.Inconclusive();
+
+            var settings = new TreeGeneratorSettings { NodesPerLevel = 2, LevelMax = 8 };
             TreeNode last = null;
             using (var writer = new StreamWriter(@"D:\Desktop\1.txt"))
             {
@@ -178,19 +180,19 @@ namespace TreeGen.Tests
         public void IdToToken_Base2_Transitions()
         {
             // level0
-//Assert.AreEqual("R", TreeGenerator.IdToToken(0)); // only one
-//// level1
-//Assert.AreEqual("Ra", TreeGenerator.IdToToken(1)); // first
-//Assert.AreEqual("Rb", TreeGenerator.IdToToken(2)); // last
-//// level2
-//Assert.AreEqual("RA", TreeGenerator.IdToToken(3)); // first
-//Assert.AreEqual("RBb", TreeGenerator.IdToToken(8)); // last
-//// level3
-//Assert.AreEqual("RAA", TreeGenerator.IdToToken(9)); // first
-//Assert.AreEqual("RBBb", TreeGenerator.IdToToken(20)); // last
-//// level4
-//Assert.AreEqual("RAAA", TreeGenerator.IdToToken(21)); // first
-//Assert.AreEqual("RBBBb", TreeGenerator.IdToToken(44)); // last
+            Assert.AreEqual("R", TreeGenerator.IdToToken(0)); // only one
+                                                              // level1
+            Assert.AreEqual("Ra", TreeGenerator.IdToToken(1)); // first
+            Assert.AreEqual("Rb", TreeGenerator.IdToToken(2)); // last
+                                                               // level2
+            Assert.AreEqual("RA", TreeGenerator.IdToToken(3)); // first
+            Assert.AreEqual("RBb", TreeGenerator.IdToToken(8)); // last
+                                                                // level3
+            Assert.AreEqual("RAA", TreeGenerator.IdToToken(9)); // first
+            Assert.AreEqual("RBBb", TreeGenerator.IdToToken(20)); // last
+                                                                  // level4
+            Assert.AreEqual("RAAA", TreeGenerator.IdToToken(21)); // first
+            Assert.AreEqual("RBBBb", TreeGenerator.IdToToken(44)); // last
             // level5
             Assert.AreEqual("RAAAA", TreeGenerator.IdToToken(45)); // first
             Assert.AreEqual("RBBBBb", TreeGenerator.IdToToken(92)); // last
