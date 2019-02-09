@@ -80,16 +80,11 @@ namespace TreeGen
 
             var divisions = new List<int>();
             var index = 0;
-            while (id >= dividers[index])
+            while (index < dividers.Length && id >= dividers[index])
             {
                 divisions.Add(Math.Max(0, id - offsets[index]) / dividers[index]);
                 index++;
             }
-
-
-
-
-
 
             var pathNumber = id;
             var multiplier = @base;

@@ -307,25 +307,25 @@ namespace TreeGen.Tests
             Assert.AreEqual("RJj", TreeGenerator.IdToToken(120, 10)); // last
             // level3
             Assert.AreEqual("RAA", TreeGenerator.IdToToken(121, 10)); // first
-            Assert.AreEqual("RBBb", TreeGenerator.IdToToken(1220, 10)); // last
+            Assert.AreEqual("RJJj", TreeGenerator.IdToToken(1220, 10)); // last
             // level4
             Assert.AreEqual("RAAA", TreeGenerator.IdToToken(1221, 10)); // first
-            Assert.AreEqual("RBBBb", TreeGenerator.IdToToken(12220, 10)); // last
+            Assert.AreEqual("RJJJj", TreeGenerator.IdToToken(12220, 10)); // last
             // level5
             Assert.AreEqual("RAAAA", TreeGenerator.IdToToken(12221, 10)); // first
-            Assert.AreEqual("RBBBBb", TreeGenerator.IdToToken(122220, 10)); // last
+            Assert.AreEqual("RJJJJj", TreeGenerator.IdToToken(122220, 10)); // last
             // level6
             Assert.AreEqual("RAAAAA", TreeGenerator.IdToToken(122221, 10)); // first
-            Assert.AreEqual("RBBBBBb", TreeGenerator.IdToToken(1222220, 10)); // last
+            Assert.AreEqual("RJJJJJj", TreeGenerator.IdToToken(1222220, 10)); // last
             // level7
             Assert.AreEqual("RAAAAAA", TreeGenerator.IdToToken(1222221, 10)); // first
-            Assert.AreEqual("RBBBBBBb", TreeGenerator.IdToToken(12222220, 10)); // last
+            Assert.AreEqual("RJJJJJJj", TreeGenerator.IdToToken(12222220, 10)); // last
             // level8
             Assert.AreEqual("RAAAAAAA", TreeGenerator.IdToToken(12222221, 10)); // first
-            Assert.AreEqual("RBBBBBBBb", TreeGenerator.IdToToken(122222220, 10)); // last
+            Assert.AreEqual("RJJJJJJJj", TreeGenerator.IdToToken(122222220, 10)); // last
             // level9
             Assert.AreEqual("RAAAAAAAA", TreeGenerator.IdToToken(122222221, 10)); // first
-            Assert.AreEqual("RBBBBBBBBb", TreeGenerator.IdToToken(1222222220, 10)); // last
+            Assert.AreEqual("RJJJJJJJJj", TreeGenerator.IdToToken(1222222220, 10)); // last
         }
         [TestMethod]
         public void TokenToId_Base10_Transitions()
@@ -334,34 +334,34 @@ namespace TreeGen.Tests
             Assert.AreEqual(0, TreeGenerator.TokenToId("R", 10)); // only one
             // level1
             Assert.AreEqual(1, TreeGenerator.TokenToId("Ra", 10)); // first
-            Assert.AreEqual(2, TreeGenerator.TokenToId("Rb", 10)); // last
+            Assert.AreEqual(10, TreeGenerator.TokenToId("Rj", 10)); // last
             // level2
-            Assert.AreEqual(3, TreeGenerator.TokenToId("RA", 10)); // first
-            Assert.AreEqual(8, TreeGenerator.TokenToId("RBb", 10)); // last
+            Assert.AreEqual(11, TreeGenerator.TokenToId("RA", 10)); // first
+            Assert.AreEqual(8, TreeGenerator.TokenToId("RJj", 10)); // last
             //level3
             Assert.AreEqual(9, TreeGenerator.TokenToId("RAA", 10)); // first
-            Assert.AreEqual(20, TreeGenerator.TokenToId("RBBb", 10)); // last
+            Assert.AreEqual(20, TreeGenerator.TokenToId("RJJj", 10)); // last
             // level4
             Assert.AreEqual(21, TreeGenerator.TokenToId("RAAA", 10)); // first
-            Assert.AreEqual(44, TreeGenerator.TokenToId("RBBBb", 10)); // last
+            Assert.AreEqual(44, TreeGenerator.TokenToId("RJJJj", 10)); // last
             // level5
             Assert.AreEqual(45, TreeGenerator.TokenToId("RAAAA", 10)); // first
-            Assert.AreEqual(92, TreeGenerator.TokenToId("RBBBBb", 10)); // last
+            Assert.AreEqual(92, TreeGenerator.TokenToId("RJJJJj", 10)); // last
             // level6
             Assert.AreEqual(93, TreeGenerator.TokenToId("RAAAAA", 10)); // first
-            Assert.AreEqual(188, TreeGenerator.TokenToId("RBBBBBb", 10)); // last
+            Assert.AreEqual(188, TreeGenerator.TokenToId("RJJJJJj", 10)); // last
             // level7
             Assert.AreEqual(189, TreeGenerator.TokenToId("RAAAAAA", 10)); // first
-            Assert.AreEqual(380, TreeGenerator.TokenToId("RBBBBBBb", 10)); // last
+            Assert.AreEqual(380, TreeGenerator.TokenToId("RJJJJJJj", 10)); // last
             // level8
             Assert.AreEqual(381, TreeGenerator.TokenToId("RAAAAAAA", 10)); // first
-            Assert.AreEqual(764, TreeGenerator.TokenToId("RBBBBBBBb", 10)); // last
+            Assert.AreEqual(764, TreeGenerator.TokenToId("RJJJJJJJj", 10)); // last
             // level9
             Assert.AreEqual(765, TreeGenerator.TokenToId("RAAAAAAAA", 10)); // first
-            Assert.AreEqual(1532, TreeGenerator.TokenToId("RBBBBBBBBb", 10)); // last
+            Assert.AreEqual(1532, TreeGenerator.TokenToId("RJJJJJJJJj", 10)); // last
             // level10
             Assert.AreEqual(1533, TreeGenerator.TokenToId("RAAAAAAAAA", 10)); // first
-            Assert.AreEqual(3068, TreeGenerator.TokenToId("RBBBBBBBBBb", 10)); // last
+            Assert.AreEqual(3068, TreeGenerator.TokenToId("RJJJJJJJJJj", 10)); // last
         }
     }
 }
