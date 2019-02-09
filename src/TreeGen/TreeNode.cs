@@ -17,7 +17,7 @@ namespace TreeGen
         /// <summary>
         /// Gets or sets the Id of the node. The first generated leaf is 1.
         /// </summary>
-        public int NodeId { get; set; }
+        public long NodeId { get; set; }
 
         /// <summary>
         /// Gets the parent TreeNode.
@@ -27,7 +27,7 @@ namespace TreeGen
         /// <summary>
         /// Gets or sets the path represented by a number in the decimal numeral system.
         /// </summary>
-        public int PathId { get; set; }
+        public long PathId { get; set; }
 
         /// <summary>
         /// Gets or sets the digis of the number that is the path representation.
@@ -38,7 +38,7 @@ namespace TreeGen
         /// <summary>
         /// Gets the path represented by a token.
         /// </summary>
-        public string PathToken { get { throw new NotImplementedException(); } } //UNDONE: NotImplementedException
+        public string PathToken { get; set; }
 
         /// <summary>
         /// Initializes a new TreeNode instance.

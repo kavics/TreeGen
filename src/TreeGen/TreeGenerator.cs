@@ -65,8 +65,19 @@ namespace TreeGen
 
         public static TreeNode CreateNode(long id, int nodesPerLevel)
         {
-            throw new NotImplementedException();
+            var pathId = IdToPathId(id, nodesPerLevel);
+            var pathDigits = GetPathDigits(pathId, nodesPerLevel);
+            var pathToken = GetPathToken(pathDigits);
+
+            return new TreeNode(null)
+            {
+                NodeId = id,
+                PathId = pathId,
+                PathDigits = pathDigits,
+                PathToken = pathToken
+            };
         }
+
         public static TreeNode CreateNode(string pathToken, int nodesPerLevel)
         {
             throw new NotImplementedException();
@@ -75,10 +86,18 @@ namespace TreeGen
 
         public static string IdToToken(long id, int nodesPerLevel)
         {
+            var pathId = IdToPathId(id, nodesPerLevel);
+
+            var pathDigits = GetPathDigits(pathId, nodesPerLevel);
+            var pathToken = GetPathToken(pathDigits);
+            return pathToken;
+        }
+        public static long IdToPathId(long id, int nodesPerLevel)
+        {
             if (id < 0)
                 throw new ArgumentException("Invalid id.");
             if (id == 0)
-                return "R";
+                return 0;
             if (nodesPerLevel > MaxNodesPerLevel)
                 throw new NotSupportedException($"The base number cannot be bigger than {MaxNodesPerLevel}.");
             if (nodesPerLevel < 2)
@@ -105,9 +124,7 @@ namespace TreeGen
                 multiplier *= @base;
             }
 
-            var pathDigits = GetPathDigits(pathId, nodesPerLevel);
-            var pathToken = GetPathToken(pathDigits);
-            return pathToken;
+            return pathId;
         }
         /// <summary>Working method</summary>
         private static void GetIdToTokenDividersAnfOffsets(int nodesPerLevel, int levelMax,

@@ -19,9 +19,9 @@ namespace TreeGen.Tests
         [TestMethod]
         public void Tree_2_CreateNodeById_20()
         {
-            var node = TreeGenerator.CreateNode(21, 2);
+            var node = TreeGenerator.CreateNode(20, 2);
 
-            Assert.AreEqual(21, node.NodeId);
+            Assert.AreEqual(20, node.NodeId);
             Assert.AreEqual("RBBb", node.PathToken);
         }
         [TestMethod]
@@ -68,11 +68,11 @@ namespace TreeGen.Tests
             Assert.AreEqual("Ra", node.PathToken);
         }
         [TestMethod]
-        public void Tree_10_CreateNodeById_12220()
+        public void Tree_10_CreateNodeById_1220()
         {
-            var node = TreeGenerator.CreateNode(21, 10);
+            var node = TreeGenerator.CreateNode(1220, 10);
 
-            Assert.AreEqual(12220, node.NodeId);
+            Assert.AreEqual(1220, node.NodeId);
             Assert.AreEqual("RJJj", node.PathToken);
         }
         [TestMethod]
@@ -84,11 +84,11 @@ namespace TreeGen.Tests
             Assert.AreEqual("Ra", node.PathToken);
         }
         [TestMethod]
-        public void Tree_10_CreateNodeByToken_12220()
+        public void Tree_10_CreateNodeByToken_1220()
         {
             var node = TreeGenerator.CreateNode("RJJj", 10);
 
-            Assert.AreEqual(12220, node.NodeId);
+            Assert.AreEqual(1220, node.NodeId);
             Assert.AreEqual("RJJj", node.PathToken);
         }
 
