@@ -63,7 +63,7 @@ namespace TreeGen
             }
         }
 
-        public static string IdToToken(int id, int nodesPerLevel)
+        public static string IdToToken(long id, int nodesPerLevel)
         {
             if (id < 0)
                 throw new ArgumentException("Invalid id.");
@@ -75,10 +75,10 @@ namespace TreeGen
                 throw new NotSupportedException("The base number cannot be less than 2.");
 
             var @base = nodesPerLevel + 1;
-            var levelMax = 10; //UNDONE: this value needs to deducted from the id. Maybe y = log(2,id) ?
+            var levelMax = 12; //UNDONE: this value needs to deducted from the id. Maybe y = log(2,id) ?
             GetIdToTokenDividersAnfOffsets(nodesPerLevel, levelMax, out var dividers, out var offsets);
 
-            var divisions = new List<int>();
+            var divisions = new List<long>();
             var index = 0;
             while (index < dividers.Length && id >= dividers[index])
             {
@@ -86,31 +86,31 @@ namespace TreeGen
                 index++;
             }
 
-            var pathNumber = id;
+            var pathId = id;
             var multiplier = @base;
-            for (int i = 0; i < divisions.Count - 1; i++)
+            for (var i = 0; i < divisions.Count - 1; i++)
             {
                 var digit = divisions[i + 1];
-                pathNumber += digit * multiplier;
+                pathId += digit * multiplier;
                 multiplier *= @base;
             }
 
-            var pathDigits = GetPathDigits(pathNumber, nodesPerLevel);
+            var pathDigits = GetPathDigits(pathId, nodesPerLevel);
             var pathToken = GetPathToken(pathDigits);
             return pathToken;
         }
         /// <summary>Working method</summary>
         private static void GetIdToTokenDividersAnfOffsets(int nodesPerLevel, int levelMax,
-            out int[] dividers, out int[] offsets)
+            out long[] dividers, out long[] offsets)
         {
             var result = GetIdToTokenDividersAnfOffsets(nodesPerLevel, levelMax);
             dividers = result.Item1;
             offsets = result.Item2;
         }
         /// <summary>Testable method</summary>
-        private static Tuple<int[], int[]> GetIdToTokenDividersAnfOffsets(int nodesPerLevel, int levelMax)
+        private static Tuple<long[], long[]> GetIdToTokenDividersAnfOffsets(int nodesPerLevel, int levelMax)
         {
-            var dividers = new int[levelMax];
+            var dividers = new long[levelMax];
             for (int i = 0; i < dividers.Length; i++)
             {
                 var multiplier = i == 1 ? nodesPerLevel + 1 : nodesPerLevel;
@@ -132,7 +132,7 @@ namespace TreeGen
             //           -------------------------------------
             // sum()-1   0    3    9   21   45   93  189  381
 
-            var offsets = new int[levelMax];
+            var offsets = new long[levelMax];
             for (int i = 0; i < offsets.Length; i++)
             {
                 var multiplier = i == 1 ? nodesPerLevel + 1 : nodesPerLevel;
@@ -145,10 +145,10 @@ namespace TreeGen
             for (int i = 0; i < offsets.Length; i++)
                 offsets[i]--;
 
-            return new Tuple<int[], int[]>(dividers, offsets);
+            return new Tuple<long[], long[]>(dividers, offsets);
         }
 
-        public static int TokenToId(string pathToken, int nodesPerLevel)
+        public static long TokenToId(string pathToken, int nodesPerLevel)
         {
             if (pathToken[0] != 'R')
                 throw new ArgumentException("Invalid token.");
@@ -159,7 +159,7 @@ namespace TreeGen
             var @base = nodesPerLevel + 1;
 
             // #1 Parse as number
-            var digits = new List<int>();
+            var digits = new List<long>();
 
             // Last char is optional. Small letter represents a leaf
             var lastChar = token[token.Length - 1];
@@ -174,7 +174,7 @@ namespace TreeGen
             }
 
             // Parse nodes (big letters)
-            var multiplier = @base;
+            long multiplier = @base;
             for (int i = token.Length - 1; i >= 0; i--)
             {
                 digits.Add(multiplier * (token[i] - 'A' + 1));
@@ -182,11 +182,11 @@ namespace TreeGen
             }
 
             // Path as number
-            var pathNumber = digits.Sum();
+            long pathNumber = digits.Sum();
 
             // #2 Calculate offset
-            var offsets = new List<int>();
-            var divider = @base * @base;
+            var offsets = new List<long>();
+            long divider = @base * @base;
             multiplier = @base;
             do
             {
@@ -200,7 +200,7 @@ namespace TreeGen
             return id;
         }
 
-        public static int[] GetPathDigits(int pathId, int nodesPerLevel)
+        public static int[] GetPathDigits(long pathId, int nodesPerLevel)
         {
             var id = pathId;
             var @base = nodesPerLevel + 1;
@@ -208,7 +208,7 @@ namespace TreeGen
             var pathDigits = new List<int>();
             do
             {
-                pathDigits.Add(id % @base);
+                pathDigits.Add(Convert.ToInt32(id % @base));
                 id /= @base;
             } while (id > 0);
 

@@ -8,9 +8,9 @@ namespace TreeGen.Tests
         {
         }
 
-        public static Tuple<int[], int[]> GetIdToTokenDividersAnfOffsets(int nodesPerLevel, int levelMax)
+        public static Tuple<long[], long[]> GetIdToTokenDividersAnfOffsets(int nodesPerLevel, int levelMax)
         {
-            return (Tuple<int[], int[]>)CallPrivateStaticMethod(typeof(TreeGenerator),
+            return (Tuple<long[], long[]>)CallPrivateStaticMethod(typeof(TreeGenerator),
                 "GetIdToTokenDividersAnfOffsets",
                 new[] { typeof(int), typeof(int) },
                 nodesPerLevel, levelMax);
