@@ -63,6 +63,16 @@ namespace TreeGen
             }
         }
 
+        public static TreeNode CreateNode(long id, int nodesPerLevel)
+        {
+            throw new NotImplementedException();
+        }
+        public static TreeNode CreateNode(string pathToken, int nodesPerLevel)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public static string IdToToken(long id, int nodesPerLevel)
         {
             if (id < 0)

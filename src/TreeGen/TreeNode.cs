@@ -2,6 +2,9 @@
 
 namespace TreeGen
 {
+    /// <summary>
+    /// Represents a node in a generated tree.
+    /// </summary>
     public class TreeNode
     {
         /// <summary>
@@ -40,7 +43,7 @@ namespace TreeGen
         /// <summary>
         /// Initializes a new TreeNode instance.
         /// </summary>
-        public TreeNode(TreeGeneratorSettings settings)
+        internal TreeNode(TreeGeneratorSettings settings)
         {
             Settings = settings;
         }
