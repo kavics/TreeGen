@@ -14,7 +14,7 @@ namespace TreeGen.Tests
         {
             Assert.Inconclusive();
 
-            var settings = new TreeGeneratorSettings { NodesPerLevel = 2, LevelMax = 8 };
+            var settings = new TreeGeneratorSettings { NodesPerLevel = 10, LevelMax = 9 };
             TreeNode last = null;
             using (var writer = new StreamWriter(@"D:\Desktop\1.txt"))
             {
