@@ -122,7 +122,7 @@ namespace TreeGen.Tests
             var expectedIds = "0,1,2,3,4,5,6,7,8";
             var expectedPaths = "R,Ra,Rb,RA,RAa,RAb,RB,RBa,RBb";
 
-            var nodes = TreeGenerator.GenerateTree(new TreeGeneratorSettings {NodesPerLevel = 2, LevelMax = 2})
+            var nodes = TreeGenerator.GenerateTree(new TreeGeneratorSettings {NodesPerLevel = 2}, 2)
                 .ToArray();
 
             Assert.AreEqual(expectedIds, string.Join(',', nodes.Select(n => n.NodeId.ToString())));

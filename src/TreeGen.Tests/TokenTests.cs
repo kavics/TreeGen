@@ -14,12 +14,14 @@ namespace TreeGen.Tests
         {
             Assert.Inconclusive();
 
-            var settings = new TreeGeneratorSettings { NodesPerLevel = 10, LevelMax = 9 };
+            var settings = new TreeGeneratorSettings { NodesPerLevel = 10 };
+            var levelMax = 9;
+
             TreeNode last = null;
             using (var writer = new StreamWriter(@"D:\Desktop\1.txt"))
             {
-                PrintHeader(settings, writer);
-                foreach (var node in TreeGenerator.GenerateTree(settings))
+                PrintHeader(settings, levelMax, writer);
+                foreach (var node in TreeGenerator.GenerateTree(settings, levelMax))
                 {
                     if (node.NodeId < (settings.NodesPerLevel+1) * 2 + 1)
                     {
@@ -37,9 +39,9 @@ namespace TreeGen.Tests
                 }
             }
         }
-        private void PrintHeader(TreeGeneratorSettings settings, TextWriter writer)
+        private void PrintHeader(TreeGeneratorSettings settings, int levelMax, TextWriter writer)
         {
-            writer.WriteLine($"Nodes per level: {settings.NodesPerLevel}, maximum level: {settings.LevelMax}.");
+            writer.WriteLine($"Nodes per level: {settings.NodesPerLevel}, maximum level: {levelMax}.");
             writer.WriteLine($"NodeId\tPathId\tPathDigits");
         }
         private void PrintNode(TreeNode node, TextWriter writer)
