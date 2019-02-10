@@ -7,7 +7,7 @@ namespace TreeGen
     /// </summary>
     public class TreeNode
     {
-        internal int NodesPerLevel { get; }
+        internal int ContainersPerLevel { get; }
 
         //TODO: Use different LeavesPerLevel in the fitire version.
 
@@ -28,13 +28,13 @@ namespace TreeGen
                 {
                     if (PathToken == "R")
                         return null;
-                    if (NodesPerLevel == 0)
-                        throw new NotSupportedException("NodesPerLevel is not defined.");
+                    if (ContainersPerLevel == 0)
+                        throw new NotSupportedException($"{nameof(ContainersPerLevel)} is not defined.");
                     if (string.IsNullOrEmpty(PathToken))
                         throw new InvalidOperationException(
                             "Cannot create the Parent because the PathToken is invalid.");
                     var parentToken = PathToken.Substring(0, PathToken.Length - 1);
-                    _parent = TreeGenerator.CreateNode(parentToken, NodesPerLevel);
+                    _parent = TreeGenerator.CreateNode(parentToken, ContainersPerLevel);
                 }
                 return _parent;
             }
@@ -47,7 +47,7 @@ namespace TreeGen
 
         /// <summary>
         /// Gets or sets the digits of the path-id that is the path representation.
-        /// The numeral system depends on the NodesPerLevel.
+        /// The numeral system depends on the ContainersPerLevel.
         /// </summary>
         public int[] PathDigits { get; set; }
 
@@ -61,9 +61,9 @@ namespace TreeGen
             {
                 if (_pathToken == null)
                 {
-                    if (NodesPerLevel == 0)
-                        throw new NotSupportedException("NodesPerLevel is not defined.");
-                    _pathToken = TreeGenerator.IdToToken(PathId, NodesPerLevel);
+                    if (ContainersPerLevel == 0)
+                        throw new NotSupportedException($"{nameof(ContainersPerLevel)} is not defined.");
+                    _pathToken = TreeGenerator.IdToToken(PathId, ContainersPerLevel);
                 }
                 return _pathToken;
             }
@@ -73,9 +73,9 @@ namespace TreeGen
         /// <summary>
         /// Initializes a new TreeNode instance.
         /// </summary>
-        internal TreeNode(int nodesPerLevel = 0)
+        internal TreeNode(int containersPerLevel = 0)
         {
-            NodesPerLevel = nodesPerLevel;
+            ContainersPerLevel = containersPerLevel;
         }
     }
 }

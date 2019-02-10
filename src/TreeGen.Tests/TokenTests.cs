@@ -12,16 +12,16 @@ namespace TreeGen.Tests
         //[TestMethod]
         public void Xxx()
         {
-            var nodesPerLevel = 2;
+            var containersPerLevel = 2;
             var levelMax = 3;
 
             TreeNode last = null;
             using (var writer = new StreamWriter(@"D:\Desktop\1.txt"))
             {
-                PrintHeader(nodesPerLevel, levelMax, writer);
-                foreach (var node in TreeGenerator.GenerateTree(nodesPerLevel, levelMax))
+                PrintHeader(containersPerLevel, levelMax, writer);
+                foreach (var node in TreeGenerator.GenerateTree(containersPerLevel, levelMax))
                 {
-                    if (node.NodeId < (nodesPerLevel + 1) * 2 + 1)
+                    if (node.NodeId < (containersPerLevel + 1) * 2 + 1)
                     {
                         PrintNode(node, writer);
                         continue;
@@ -37,9 +37,9 @@ namespace TreeGen.Tests
                 }
             }
         }
-        private void PrintHeader(int nodesPerLevel, int levelMax, TextWriter writer)
+        private void PrintHeader(int containersPerLevel, int levelMax, TextWriter writer)
         {
-            writer.WriteLine($"Nodes per level: {nodesPerLevel}, maximum level: {levelMax}.");
+            writer.WriteLine($"Nodes per level: {containersPerLevel}, maximum level: {levelMax}.");
             writer.WriteLine($"NodeId\tPathId\tPathDigits");
         }
         private void PrintNode(TreeNode node, TextWriter writer)
@@ -104,7 +104,7 @@ namespace TreeGen.Tests
         {
             try
             {
-                TreeGenerator.IdToToken(1, TreeGenerator.MaxNodesPerLevel + 1);
+                TreeGenerator.IdToToken(1, TreeGenerator.ContainersPerLevelMax + 1);
                 Assert.Fail("NotSupportedException was not thrown");
             }
             catch (NotSupportedException e)
