@@ -7,10 +7,7 @@ namespace TreeGen
     /// </summary>
     public class TreeNode
     {
-        /// <summary>
-        /// Gets the current GeneratorSettings instance.
-        /// </summary>
-        public TreeGeneratorSettings Settings { get; }
+        internal int NodesPerLevel { get; }
 
         //TODO: Use different LeavesPerLevel in the fitire version.
 
@@ -35,16 +32,30 @@ namespace TreeGen
         /// </summary>
         public int[] PathDigits { get; set; }
 
+        private string _pathToken;
         /// <summary>
-        /// Gets the path represented by a token.
+        /// Gets or sets the path represented by a token.
         /// </summary>
-        public string PathToken { get; set; }
+        public string PathToken {
+            get
+            {
+                if (_pathToken == null)
+                {
+                    if (NodesPerLevel == 0)
+                        throw new NotSupportedException("NodesPerLevel is not defined.");
+                    _pathToken = TreeGenerator.IdToToken(PathId, NodesPerLevel);
+                }
+                return _pathToken;
+            }
+            set => _pathToken = value;
+        }
 
         /// <summary>
         /// Initializes a new TreeNode instance.
         /// </summary>
-        internal TreeNode()
+        internal TreeNode(int nodesPerLevel = 0)
         {
+            NodesPerLevel = nodesPerLevel;
         }
     }
 }
