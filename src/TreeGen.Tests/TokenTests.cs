@@ -9,50 +9,6 @@ namespace TreeGen.Tests
     [TestClass]
     public class TokenTests
     {
-        //[TestMethod]
-        public void Xxx()
-        {
-            var containersPerLevel = 2;
-            var levelMax = 3;
-
-            TreeNode last = null;
-            using (var writer = new StreamWriter(@"D:\Desktop\1.txt"))
-            {
-                PrintHeader(containersPerLevel, levelMax, writer);
-                foreach (var node in TreeGenerator.GenerateTree(containersPerLevel, levelMax))
-                {
-                    if (node.NodeId < (containersPerLevel + 1) * 2 + 1)
-                    {
-                        PrintNode(node, writer);
-                        continue;
-                    }
-                    var digits = node.PathDigits;
-                    if (digits[0] == 0 && digits.Max() == 1)
-                    {
-                        writer.WriteLine();
-                        PrintNode(last, writer);
-                        PrintNode(node, writer);
-                    }
-                    last = node;
-                }
-            }
-        }
-        private void PrintHeader(int containersPerLevel, int levelMax, TextWriter writer)
-        {
-            writer.WriteLine($"Nodes per level: {containersPerLevel}, maximum level: {levelMax}.");
-            writer.WriteLine($"NodeId\tPathId\tPathDigits");
-        }
-        private void PrintNode(TreeNode node, TextWriter writer)
-        {
-            var source = node.PathDigits;
-            var length = source.Length;
-            var digits = new int[length];
-            for (int i = digits.Length - 1; i >= 0; i--)
-                digits[i] = node.PathDigits[length - i -1];
-
-            writer.WriteLine("{0}\t{1}\t{2}", node.NodeId, node.PathId, string.Join('\t', digits));
-        }
-
         [TestMethod]
         public void Pow()
         {

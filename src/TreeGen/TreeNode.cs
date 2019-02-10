@@ -63,7 +63,7 @@ namespace TreeGen
                 {
                     if (ContainersPerLevel == 0)
                         throw new NotSupportedException($"{nameof(ContainersPerLevel)} is not defined.");
-                    _pathToken = TreeGenerator.IdToToken(PathId, ContainersPerLevel);
+                    _pathToken = TreeGenerator.IdToToken(NodeId, ContainersPerLevel);
                 }
                 return _pathToken;
             }
