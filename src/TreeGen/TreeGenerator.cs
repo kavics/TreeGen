@@ -15,8 +15,6 @@ namespace TreeGen
             var nodesPerLevel = immutableSettings.NodesPerLevel;
             var levelMax = immutableSettings.LevelMax;
 
-            var @base = nodesPerLevel + 1;
-
             var id = 0;
             var digits = new int[levelMax];
             var maxDigits = 1;
@@ -63,15 +61,14 @@ namespace TreeGen
             }
         }
 
-        public static TreeNode CreateNode(long id, int nodesPerLevel)
+        public static TreeNode CreateNode(long nodeId, int nodesPerLevel)
         {
-            var pathId = IdToPathId(id, nodesPerLevel);
+            var pathId = IdToPathId(nodeId, nodesPerLevel);
             var pathDigits = GetPathDigits(pathId, nodesPerLevel);
             var pathToken = GetPathToken(pathDigits);
-
             return new TreeNode
             {
-                NodeId = id,
+                NodeId = nodeId,
                 PathId = pathId,
                 PathDigits = pathDigits,
                 PathToken = pathToken
@@ -80,17 +77,23 @@ namespace TreeGen
 
         public static TreeNode CreateNode(string pathToken, int nodesPerLevel)
         {
-            throw new NotImplementedException();
+            var pathDigits = ParseToken(pathToken, nodesPerLevel);
+            var pathId = GetPathIdFromDigits(pathDigits, nodesPerLevel);
+            var nodeId = GetNodeIdFromPathId(pathId, nodesPerLevel);
+            return new TreeNode
+            {
+                NodeId = nodeId,
+                PathId = pathId,
+                PathDigits = pathDigits,
+                PathToken = pathToken
+            };
         }
-
 
         public static string IdToToken(long id, int nodesPerLevel)
         {
             var pathId = IdToPathId(id, nodesPerLevel);
-
             var pathDigits = GetPathDigits(pathId, nodesPerLevel);
-            var pathToken = GetPathToken(pathDigits);
-            return pathToken;
+            return GetPathToken(pathDigits);
         }
         public static long IdToPathId(long id, int nodesPerLevel)
         {
@@ -177,20 +180,24 @@ namespace TreeGen
 
         public static long TokenToId(string pathToken, int nodesPerLevel)
         {
+            var pathDigits = ParseToken(pathToken, nodesPerLevel);
+            var pathId = GetPathIdFromDigits(pathDigits, nodesPerLevel);
+            return GetNodeIdFromPathId(pathId, nodesPerLevel);
+        }
+        public static int[] ParseToken(string pathToken, int nodesPerLevel)
+        {
             if (pathToken[0] != 'R')
                 throw new ArgumentException("Invalid token.");
             if (pathToken == "R")
-                return 0;
+                return new int[0];
 
             var token = pathToken.Substring(1);
-            var @base = nodesPerLevel + 1;
 
-            // #1 Parse as number
-            var digits = new List<long>();
+            var digits = new List<int>();
 
             // Last char is optional. Small letter represents a leaf
             var lastChar = token[token.Length - 1];
-            if(lastChar >= 'a')
+            if (lastChar >= 'a')
             {
                 digits.Add(lastChar - 'a' + 1);
                 token = token.Substring(0, token.Length - 1);
@@ -201,29 +208,42 @@ namespace TreeGen
             }
 
             // Parse nodes (big letters)
-            long multiplier = @base;
-            for (int i = token.Length - 1; i >= 0; i--)
-            {
-                digits.Add(multiplier * (token[i] - 'A' + 1));
-                multiplier *= @base;
-            }
+            for (var i = token.Length - 1; i >= 0; i--)
+                digits.Add( (token[i] - 'A' + 1));
 
             // Path as number
-            long pathNumber = digits.Sum();
+            return digits.ToArray();
+        }
+        public static long GetPathIdFromDigits(int[] pathDigits, int nodesPerLevel)
+        {
+            // Parse nodes (big letters)
+            var @base = nodesPerLevel + 1;
+
+            long multiplier = 1;
+            long pathId = 0;
+            for (var i = 0; i < pathDigits.Length; i++)
+            {
+                pathId += pathDigits[i] * multiplier;
+                multiplier *= @base;
+            }
+            return pathId;
+        }
+        private static long GetNodeIdFromPathId(long pathId, int nodesPerLevel)
+        {
+            var @base = nodesPerLevel + 1;
 
             // #2 Calculate offset
             var offsets = new List<long>();
             long divider = @base * @base;
-            multiplier = @base;
+            long multiplier = @base;
             do
             {
-                offsets.Add((pathNumber / divider) * multiplier);
+                offsets.Add((pathId / divider) * multiplier);
                 divider *= @base;
                 multiplier *= nodesPerLevel;
-            } while (pathNumber >= divider);
+            } while (pathId >= divider);
 
-            var id = pathNumber - offsets.Sum();
-
+            var id = pathId - offsets.Sum();
             return id;
         }
 
@@ -243,9 +263,8 @@ namespace TreeGen
         }
         public static string GetPathToken(int[] pathDigits)
         {
-            var tokenChars = new List<char>();
-            tokenChars.Add('R');
-            for (int i = pathDigits.Length - 1; i > 0; i--)
+            var tokenChars = new List<char> {'R'};
+            for (var i = pathDigits.Length - 1; i > 0; i--)
                 tokenChars.Add((char)('A' + pathDigits[i] - 1));
             if (pathDigits.Length > 0)
                 if (pathDigits[0] != 0)
@@ -256,7 +275,7 @@ namespace TreeGen
         public static int Pow(int x, uint exp)
         {
             var result = 1;
-            for (int i = 0; i < exp; i++)
+            for (var i = 0; i < exp; i++)
                 result *= x;
             return result;
         }
