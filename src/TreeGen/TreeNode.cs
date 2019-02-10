@@ -43,9 +43,8 @@ namespace TreeGen
         /// <summary>
         /// Initializes a new TreeNode instance.
         /// </summary>
-        internal TreeNode(TreeGeneratorSettings settings)
+        internal TreeNode()
         {
-            Settings = settings;
         }
     }
 }

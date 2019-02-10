@@ -53,7 +53,7 @@ namespace TreeGen
                 {
                     id++;
 
-                    yield return new TreeNode(immutableSettings)
+                    yield return new TreeNode
                     {
                         NodeId = id,
                         PathId = i,
@@ -69,7 +69,7 @@ namespace TreeGen
             var pathDigits = GetPathDigits(pathId, nodesPerLevel);
             var pathToken = GetPathToken(pathDigits);
 
-            return new TreeNode(null)
+            return new TreeNode
             {
                 NodeId = id,
                 PathId = pathId,
