@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TreeGen.Tests
@@ -118,10 +119,14 @@ namespace TreeGen.Tests
         [TestMethod]
         public void Tree_2_Full_Depth2()
         {
-            Assert.Inconclusive();
-            ;
-            var ids = "0,1,2,3,4,5,6,7,8";
-            var paths = "R,Ra,Rb,RA,RAa,RAb,RB,RBa,TBb";
+            var expectedIds = "0,1,2,3,4,5,6,7,8";
+            var expectedPaths = "R,Ra,Rb,RA,RAa,RAb,RB,RBa,RBb";
+
+            var nodes = TreeGenerator.GenerateTree(new TreeGeneratorSettings {NodesPerLevel = 2, LevelMax = 2})
+                .ToArray();
+
+            Assert.AreEqual(expectedIds, string.Join(',', nodes.Select(n => n.NodeId.ToString())));
+            Assert.AreEqual(expectedPaths, string.Join(',', nodes.Select(n => n.PathToken)));
         }
     }
 }

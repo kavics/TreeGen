@@ -6,27 +6,37 @@ namespace TreeGen
 {
     public class TreeGeneratorSettings
     {
+        protected int _nodesPerLevel;
+        protected int _levelMax;
+
         /// <summary>
         /// Gets or sets the width of the containers and leaves in one level.
         /// </summary>
-        public int NodesPerLevel { get; set; }
+        public int NodesPerLevel
+        {
+            get => _nodesPerLevel;
+            set => _nodesPerLevel = value;
+        }
 
         /// <summary>
         /// Gets or set the maximum level of the generated tree.
         /// Root's level is 0.
         /// </summary>
-        public int LevelMax { get; set; }
+        public int LevelMax
+        {
+            get => _levelMax;
+            set => _levelMax = value;
+        }
 
-        /// <summary>
-        /// Gets the default TreeGeneratorSettings for tests.
-        /// </summary>
-        public static readonly ImmutableTreeGeneratorSettings Default =
-            new ImmutableTreeGeneratorSettings(
-                new TreeGeneratorSettings
-                {
-                    NodesPerLevel = 2,
-                    LevelMax = 3
-                });
+        internal ImmutableTreeGeneratorSettings CreateImmutableInstance()
+        {
+            var clone = new ImmutableTreeGeneratorSettings
+            {
+                _nodesPerLevel = NodesPerLevel,
+                _levelMax = LevelMax
+            };
+            return clone;
+        }
     }
 
     public class ImmutableTreeGeneratorSettings : TreeGeneratorSettings
@@ -34,21 +44,18 @@ namespace TreeGen
         /// <summary>
         /// Gets the width of the containers and leaves in one level.
         /// </summary>
-        public new int NodesPerLevel { get; }
+        public new int NodesPerLevel
+        {
+            get => _nodesPerLevel;
+        }
 
         /// <summary>
         /// Gets the maximum level of the generated tree.
         /// Root's level is 0.
         /// </summary>
-        public new int LevelMax { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the ImmutableTreeGeneratorSettings.
-        /// </summary>
-        public ImmutableTreeGeneratorSettings(TreeGeneratorSettings original)
+        public new int LevelMax
         {
-            NodesPerLevel = original.NodesPerLevel;
-            LevelMax = original.LevelMax;
+            get => _levelMax;
         }
     }
 }

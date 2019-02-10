@@ -8,9 +8,9 @@ namespace TreeGen
     {
         public static readonly int MaxNodesPerLevel = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".Length;
 
-        public static IEnumerable<TreeNode> GenerateTree(TreeGeneratorSettings settings = null)
+        public static IEnumerable<TreeNode> GenerateTree(TreeGeneratorSettings settings)
         {
-            var immutableSettings = new ImmutableTreeGeneratorSettings(settings ?? TreeGeneratorSettings.Default);
+            var immutableSettings = settings.CreateImmutableInstance();
 
             var nodesPerLevel = immutableSettings.NodesPerLevel;
             var levelMax = immutableSettings.LevelMax;
@@ -18,6 +18,14 @@ namespace TreeGen
             var id = 0;
             var digits = new int[levelMax];
             var maxDigits = 1;
+
+            yield return new TreeNode(settings.NodesPerLevel)
+            {
+                NodeId = 0,
+                PathId = 0,
+                PathDigits = digits.ToArray(),
+            };
+
             for (int i = 1; i < int.MaxValue; i++)
             {
                 var d = 0;
@@ -51,7 +59,7 @@ namespace TreeGen
                 {
                     id++;
 
-                    yield return new TreeNode
+                    yield return new TreeNode(settings.NodesPerLevel)
                     {
                         NodeId = id,
                         PathId = i,
