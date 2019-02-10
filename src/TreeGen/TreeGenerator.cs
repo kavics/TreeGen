@@ -105,9 +105,9 @@ namespace TreeGen
             if (id == 0)
                 return 0;
             if (nodesPerLevel > MaxNodesPerLevel)
-                throw new NotSupportedException($"The base number cannot be bigger than {MaxNodesPerLevel}.");
+                throw new NotSupportedException($"The {nameof(nodesPerLevel)} cannot be bigger than {MaxNodesPerLevel}.");
             if (nodesPerLevel < 2)
-                throw new NotSupportedException("The base number cannot be less than 2.");
+                throw new NotSupportedException($"The {nameof(nodesPerLevel)} cannot be less than 2.");
 
             var @base = nodesPerLevel + 1;
             var levelMax = 12; //UNDONE: this value needs to deducted from the id. Maybe y = log(2,id) ?
@@ -150,7 +150,7 @@ namespace TreeGen
                 dividers[i] = i == 0 ? nodesPerLevel : dividers[i - 1] * multiplier;
             }
 
-            // Expected offsets by numbering system 2
+            // Expected offsets by numeral system 2
             //
             //  index    0    1    2    3    4    5    6    7
             //           -------------------------------------
@@ -214,7 +214,6 @@ namespace TreeGen
             for (var i = token.Length - 1; i >= 0; i--)
                 digits.Add( (token[i] - 'A' + 1));
 
-            // Path as number
             return digits.ToArray();
         }
         public static long GetPathIdFromDigits(int[] pathDigits, int nodesPerLevel)

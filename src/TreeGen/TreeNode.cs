@@ -46,7 +46,7 @@ namespace TreeGen
         public long PathId { get; set; }
 
         /// <summary>
-        /// Gets or sets the digis of the number that is the path representation.
+        /// Gets or sets the digits of the path-id that is the path representation.
         /// The numeral system depends on the NodesPerLevel.
         /// </summary>
         public int[] PathDigits { get; set; }
