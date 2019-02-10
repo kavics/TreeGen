@@ -9,21 +9,19 @@ namespace TreeGen.Tests
     [TestClass]
     public class TokenTests
     {
-        [TestMethod]
+        //[TestMethod]
         public void Xxx()
         {
-            Assert.Inconclusive();
-
-            var settings = new TreeGeneratorSettings { NodesPerLevel = 10 };
-            var levelMax = 9;
+            var nodesPerLevel = 2;
+            var levelMax = 3;
 
             TreeNode last = null;
             using (var writer = new StreamWriter(@"D:\Desktop\1.txt"))
             {
-                PrintHeader(settings, levelMax, writer);
-                foreach (var node in TreeGenerator.GenerateTree(settings, levelMax))
+                PrintHeader(nodesPerLevel, levelMax, writer);
+                foreach (var node in TreeGenerator.GenerateTree(nodesPerLevel, levelMax))
                 {
-                    if (node.NodeId < (settings.NodesPerLevel+1) * 2 + 1)
+                    if (node.NodeId < (nodesPerLevel + 1) * 2 + 1)
                     {
                         PrintNode(node, writer);
                         continue;
@@ -39,9 +37,9 @@ namespace TreeGen.Tests
                 }
             }
         }
-        private void PrintHeader(TreeGeneratorSettings settings, int levelMax, TextWriter writer)
+        private void PrintHeader(int nodesPerLevel, int levelMax, TextWriter writer)
         {
-            writer.WriteLine($"Nodes per level: {settings.NodesPerLevel}, maximum level: {levelMax}.");
+            writer.WriteLine($"Nodes per level: {nodesPerLevel}, maximum level: {levelMax}.");
             writer.WriteLine($"NodeId\tPathId\tPathDigits");
         }
         private void PrintNode(TreeNode node, TextWriter writer)
