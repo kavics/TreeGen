@@ -45,18 +45,16 @@ namespace TreeGen.Tests
         [TestMethod]
         public void Tree_2_Parent()
         {
-            Assert.Inconclusive();
-
             var node = TreeGenerator.CreateNode("RBBb", 2);
 
             var parent = node.Parent;
-            Assert.AreEqual("RBB", parent);
+            Assert.AreEqual("RBB", parent.PathToken);
 
             parent = parent.Parent;
-            Assert.AreEqual("RB", parent);
+            Assert.AreEqual("RB", parent.PathToken);
 
             parent = parent.Parent;
-            Assert.AreEqual("R", parent);
+            Assert.AreEqual("R", parent.PathToken);
 
             parent = parent.Parent;
             Assert.IsNull(parent);
@@ -99,18 +97,16 @@ namespace TreeGen.Tests
         [TestMethod]
         public void Tree_10_Parent()
         {
-            Assert.Inconclusive();
-
             var node = TreeGenerator.CreateNode("RJJj", 2);
 
             var parent = node.Parent;
-            Assert.AreEqual("RJJ", parent);
+            Assert.AreEqual("RJJ", parent.PathToken);
 
             parent = parent.Parent;
-            Assert.AreEqual("RJ", parent);
+            Assert.AreEqual("RJ", parent.PathToken);
 
             parent = parent.Parent;
-            Assert.AreEqual("R", parent);
+            Assert.AreEqual("R", parent.PathToken);
 
             parent = parent.Parent;
             Assert.IsNull(parent);

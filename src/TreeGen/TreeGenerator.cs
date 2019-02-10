@@ -69,7 +69,7 @@ namespace TreeGen
             var pathId = IdToPathId(nodeId, nodesPerLevel);
             var pathDigits = GetPathDigits(pathId, nodesPerLevel);
             var pathToken = GetPathToken(pathDigits);
-            return new TreeNode
+            return new TreeNode(nodesPerLevel)
             {
                 NodeId = nodeId,
                 PathId = pathId,
@@ -83,7 +83,7 @@ namespace TreeGen
             var pathDigits = ParseToken(pathToken, nodesPerLevel);
             var pathId = GetPathIdFromDigits(pathDigits, nodesPerLevel);
             var nodeId = GetNodeIdFromPathId(pathId, nodesPerLevel);
-            return new TreeNode
+            return new TreeNode(nodesPerLevel)
             {
                 NodeId = nodeId,
                 PathId = pathId,

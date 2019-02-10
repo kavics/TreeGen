@@ -16,10 +16,29 @@ namespace TreeGen
         /// </summary>
         public long NodeId { get; set; }
 
+        private TreeNode _parent;
         /// <summary>
         /// Gets the parent TreeNode.
         /// </summary>
-        public TreeNode Parent { get { throw new NotImplementedException(); } } //UNDONE: NotImplementedException
+        public TreeNode Parent
+        {
+            get
+            {
+                if (_parent == null)
+                {
+                    if (PathToken == "R")
+                        return null;
+                    if (NodesPerLevel == 0)
+                        throw new NotSupportedException("NodesPerLevel is not defined.");
+                    if (string.IsNullOrEmpty(PathToken))
+                        throw new InvalidOperationException(
+                            "Cannot create the Parent because the PathToken is invalid.");
+                    var parentToken = PathToken.Substring(0, PathToken.Length - 1);
+                    _parent = TreeGenerator.CreateNode(parentToken, NodesPerLevel);
+                }
+                return _parent;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the path represented by a number in the decimal numeral system.
@@ -36,7 +55,8 @@ namespace TreeGen
         /// <summary>
         /// Gets or sets the path represented by a token.
         /// </summary>
-        public string PathToken {
+        public string PathToken
+        {
             get
             {
                 if (_pathToken == null)
