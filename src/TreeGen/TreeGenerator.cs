@@ -77,7 +77,6 @@ namespace TreeGen
                 PathToken = pathToken
             };
         }
-
         public static TreeNode CreateNode(string pathToken, int containersPerLevel)
         {
             var pathDigits = ParseToken(pathToken, containersPerLevel);
@@ -98,7 +97,7 @@ namespace TreeGen
             var pathDigits = GetPathDigits(pathId, containersPerLevel);
             return GetPathToken(pathDigits);
         }
-        public static long IdToPathId(long id, int containersPerLevel)
+        private static long IdToPathId(long id, int containersPerLevel)
         {
             if (id < 0)
                 throw new ArgumentException("Invalid id.");
@@ -187,7 +186,7 @@ namespace TreeGen
             var pathId = GetPathIdFromDigits(pathDigits, containersPerLevel);
             return GetNodeIdFromPathId(pathId, containersPerLevel);
         }
-        public static int[] ParseToken(string pathToken, int containersPerLevel)
+        private static int[] ParseToken(string pathToken, int containersPerLevel)
         {
             if (pathToken[0] != 'R')
                 throw new ArgumentException("Invalid token.");
@@ -216,7 +215,7 @@ namespace TreeGen
 
             return digits.ToArray();
         }
-        public static long GetPathIdFromDigits(int[] pathDigits, int containersPerLevel)
+        private static long GetPathIdFromDigits(int[] pathDigits, int containersPerLevel)
         {
             // Parse nodes (big letters)
             var @base = containersPerLevel + 1;
@@ -249,7 +248,7 @@ namespace TreeGen
             return id;
         }
 
-        public static int[] GetPathDigits(long pathId, int containersPerLevel)
+        private static int[] GetPathDigits(long pathId, int containersPerLevel)
         {
             var id = pathId;
             var @base = containersPerLevel + 1;
@@ -263,7 +262,7 @@ namespace TreeGen
 
             return pathDigits.ToArray();
         }
-        public static string GetPathToken(int[] pathDigits)
+        private static string GetPathToken(int[] pathDigits)
         {
             var tokenChars = new List<char> {'R'};
             for (var i = pathDigits.Length - 1; i > 0; i--)
@@ -272,14 +271,6 @@ namespace TreeGen
                 if (pathDigits[0] != 0)
                     tokenChars.Add((char)('a' + pathDigits[0] - 1));
             return new string(tokenChars.ToArray());
-        }
-
-        public static int Pow(int x, uint exp)
-        {
-            var result = 1;
-            for (var i = 0; i < exp; i++)
-                result *= x;
-            return result;
         }
     }
 }

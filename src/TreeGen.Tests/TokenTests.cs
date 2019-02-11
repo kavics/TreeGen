@@ -10,18 +10,6 @@ namespace TreeGen.Tests
     public class TokenTests
     {
         [TestMethod]
-        public void Pow()
-        {
-            Assert.AreEqual(4, TreeGenerator.Pow(2, 2));
-            Assert.AreEqual(8, TreeGenerator.Pow(2, 3));
-            Assert.AreEqual(1024, TreeGenerator.Pow(2, 10));
-
-            Assert.AreEqual(64, TreeGenerator.Pow(4, 3));
-
-            Assert.AreEqual(100000, TreeGenerator.Pow(10, 5));
-        }
-
-        [TestMethod]
         public void IdToToken_0()
         {
             Assert.AreEqual("R", TreeGenerator.IdToToken(0, 2));
