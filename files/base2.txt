@@ -1,0 +1,20 @@
+Nodes per level: 2, maximum level: 6.
+NodeId	PathId	PathToken	PathDigits
+0	0	R	0	0	0	0	0	0
+1	1	Ra	0	0	0	0	0	1
+2	2	Rb	0	0	0	0	0	2
+3	3	RA	0	0	0	0	1	0
+4	4	RAa	0	0	0	0	1	1
+5	5	RAb	0	0	0	0	1	2
+
+8	8	RBb	0	0	0	0	2	2
+9	12	RAA	0	0	0	1	1	0
+
+20	26	RBBb	0	0	0	2	2	2
+21	39	RAAA	0	0	1	1	1	0
+
+44	80	RBBBb	0	0	2	2	2	2
+45	120	RAAAA	0	1	1	1	1	0
+
+92	242	RBBBBb	0	2	2	2	2	2
+93	363	RAAAAA	1	1	1	1	1	0
