@@ -8,20 +8,35 @@ namespace TreeGen
     {
         public static readonly int ContainersPerLevelMax = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".Length;
 
-        public static IEnumerable<TreeNode> GenerateTree(int containersPerLevel, int levelMax)
+        public static IEnumerable<TreeNode> GenerateTree(int containersPerLevel, int levelMax, long startNodeId = 0)
         {
-            var id = 0;
+            if (startNodeId < 0)
+                throw new ArgumentException($"The {nameof(startNodeId)} parameter cannot be less than 0.");
+
             var digits = new int[levelMax];
-            var maxDigits = 1;
-
-            yield return new TreeNode(containersPerLevel)
+            if (startNodeId == 0)
             {
-                NodeId = 0,
-                PathId = 0,
-                PathDigits = digits.ToArray(),
-            };
+                yield return new TreeNode(containersPerLevel)
+                {
+                    NodeId = 0,
+                    PathId = 0,
+                    PathDigits = digits.ToArray(),
+                };
+            }
 
-            for (int i = 1; i < int.MaxValue; i++)
+            var id = 0L;
+            var maxDigits = 1;
+            if(startNodeId > 0)
+            {
+                id = startNodeId - 1;
+                var pathId = IdToPathId(id, containersPerLevel);
+                var d = GetPathDigits(pathId, containersPerLevel);
+                for (int i = 0; i < Math.Min(digits.Length, d.Length); i++)
+                    digits[i] = d[i];
+                maxDigits = d.Length;
+            }
+
+            for (var i = startNodeId; i < long.MaxValue; i++)
             {
                 var d = 0;
                 while (true)
